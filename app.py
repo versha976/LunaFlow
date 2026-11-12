@@ -275,5 +275,68 @@ def save_symptom():
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
+@app.route("/get-symptoms", methods=["GET"])
+def get_symptoms():
+
+    if "user_id" not in session:
+        return jsonify({"message": "Please login first"}), 401
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        query = """
+            SELECT entry_id, entry_date, symptoms,
+                   mood, severity, notes
+            FROM symptom_entries
+            WHERE user_id = %s
+            ORDER BY entry_date DESC
+        """
+
+        cursor.execute(query, (session["user_id"],))
+        entries = cursor.fetchall()
+
+        for entry in entries:
+            entry["entry_date"] = entry["entry_date"].isoformat()
+
+        cursor.close()
+        connection.close()
+
+        return jsonify(entries)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+@app.route("/delete-symptom/<int:entry_id>", methods=["DELETE"])
+def delete_symptom(entry_id):
+
+    if "user_id" not in session:
+        return jsonify({"message": "Please login first"}), 401
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        query = """
+            DELETE FROM symptom_entries
+            WHERE entry_id = %s AND user_id = %s
+        """
+
+        cursor.execute(query, (entry_id, session["user_id"]))
+        connection.commit()
+
+        if cursor.rowcount == 0:
+            cursor.close()
+            connection.close()
+            return jsonify({"message": "Entry not found"}), 404
+
+        cursor.close()
+        connection.close()
+
+        return jsonify({"message": "Entry deleted successfully"})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)

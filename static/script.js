@@ -323,104 +323,116 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// DISPLAY SAVED SYMPTOM HISTORY
+// DISPLAY SYMPTOM HISTORY FROM MYSQL
 
-function displaySymptomHistory() {
+async function displaySymptomHistory() {
 
     let historyContainer = document.getElementById("historyContainer");
 
-    // Get saved entries from browser storage
-    let entries = JSON.parse(
-        localStorage.getItem("lunaFlowEntries")
-    ) || [];
+    try {
 
-    // Show message if there are no entries
-    if (entries.length === 0) {
+        let response = await fetch("/get-symptoms");
 
-        historyContainer.innerHTML = `
-            <div class="no-history">
-                <p>Your saved entries will appear here. 💗</p>
-            </div>
-        `;
+        if (response.status === 401) {
+            historyContainer.innerHTML = `
+                <p>Please login to view your symptom history. 💗</p>
+            `;
+            return;
+        }
 
-        return;
-    }
+        let entries = await response.json();
 
-    // Clear previous history
-    historyContainer.innerHTML = "";
+        if (!response.ok) {
+            throw new Error(entries.message || "Could not load history.");
+        }
 
-    // Display each saved entry
-    entries.forEach(function (entry, index) {
+        if (entries.length === 0) {
+            historyContainer.innerHTML = `
+                <div class="no-history">
+                    <p>Your saved entries will appear here. 💗</p>
+                </div>
+            `;
+            return;
+        }
 
-        let card = document.createElement("div");
+        historyContainer.innerHTML = "";
 
-        card.className = "history-card";
+        entries.forEach(function (entry) {
 
-        let heading = document.createElement("h3");
-        heading.textContent = "📅 " + entry.date;
+            let card = document.createElement("div");
+            card.className = "history-card";
 
-        let symptoms = document.createElement("p");
-        symptoms.textContent =
-            "Symptoms: " + entry.symptoms.join(", ");
+            let heading = document.createElement("h3");
+            heading.textContent = "📅 " + entry.entry_date;
 
-        let mood = document.createElement("p");
-        mood.textContent = "Mood: " + entry.mood;
+            let symptoms = document.createElement("p");
+            symptoms.textContent = "Symptoms: " + entry.symptoms;
 
-        let severity = document.createElement("p");
-        severity.textContent = "Severity: " + entry.severity;
+            let mood = document.createElement("p");
+            mood.textContent = "Mood: " + entry.mood;
 
-        let notes = document.createElement("p");
-        notes.textContent = "Notes: " + (entry.notes || "No notes added");
+            let severity = document.createElement("p");
+            severity.textContent = "Severity: " + entry.severity;
 
-        let deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete Entry";
-        deleteButton.type = "button";
+            let notes = document.createElement("p");
+            notes.textContent = "Notes: " + (entry.notes || "No notes added");
 
-        deleteButton.addEventListener("click", function () {
+            card.appendChild(heading);
+            card.appendChild(symptoms);
+            card.appendChild(mood);
+            card.appendChild(severity);
+            card.appendChild(notes);
+            // Create Delete button
+            let deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete Entry";
+            deleteButton.className = "delete-btn";
 
-            deleteSymptomEntry(index);
+            deleteButton.addEventListener("click", function () {
+                deleteSymptomEntry(entry.entry_id);
+            });
+
+            card.appendChild(deleteButton);
+            historyContainer.appendChild(card);
 
         });
 
-        card.appendChild(heading);
-        card.appendChild(symptoms);
-        card.appendChild(mood);
-        card.appendChild(severity);
-        card.appendChild(notes);
-        card.appendChild(deleteButton);
+    } catch (error) {
 
-        historyContainer.appendChild(card);
+        historyContainer.innerHTML =
+            "<p>Could not load symptom history. Please try again.</p>";
 
-    });
-
+        console.error(error);
+    }
 }
-
 
 // DELETE A SAVED ENTRY
 
-function deleteSymptomEntry(index) {
+async function deleteSymptomEntry(entryId) {
 
     let confirmDelete = confirm(
         "Are you sure you want to delete this entry?"
     );
 
-    if (!confirmDelete) {
-        return;
+    if (!confirmDelete) return;
+
+    try {
+        let response = await fetch(`/delete-symptom/${entryId}`, {
+            method: "DELETE"
+        });
+
+        let data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Could not delete entry.");
+        }
+
+        alert("Entry deleted successfully! 💗");
+
+        await displaySymptomHistory();
+
+    } catch (error) {
+        alert(error.message);
     }
-
-    let entries = JSON.parse(
-        localStorage.getItem("lunaFlowEntries")
-    ) || [];
-
-    entries.splice(index, 1);
-
-    localStorage.setItem(
-        "lunaFlowEntries",
-        JSON.stringify(entries)
-    );
-
-    displaySymptomHistory();
-
 }
 
 

@@ -152,6 +152,45 @@ body {
     }
 }
 
+/* Additional Mobile Responsiveness */
+
+@media (max-width: 700px) {
+
+    .tracker,
+    .contact {
+        padding: 40px 20px;
+    }
+
+    .tracker-card {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .dashboard {
+        padding: 30px 15px;
+    }
+
+    .history-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .calendar {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+}
+
+
 /* CYCLE TRACKER SECTION */
 
 .tracker {
@@ -767,4 +806,36 @@ body {
     .history-section h2 {
         font-size: 28px;
     }
+}
+
+/* CONTACT SECTION */
+
+.contact {
+    background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+    padding: 70px 25px;
+    text-align: center;
+}
+
+.contact h2 {
+    font-size: 32px;
+    color: #b04b7b;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 16px;
+    color: #665466;
+    line-height: 1.8;
+    margin: 12px auto;
+    max-width: 600px;
+}
+
+.contact p:last-child {
+    display: inline-block;
+    background: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    color: #b04b7b;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(176, 75, 123, 0.12);
 }
