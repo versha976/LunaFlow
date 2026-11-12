@@ -25,7 +25,7 @@
             <a href="#contact">Contact</a>
             <a href="#tracker">Cycle Tracker</a>
             <a href="#calendar">Calendar</a>
-            
+
             {% if session.get('user_id') %}
             <span class="welcome-user">
                 Welcome, {{ session.get('full_name') }}!
@@ -60,61 +60,61 @@
 
     <!-- USER DASHBOARD -->
 
-    
-<section class="dashboard" id="dashboard">
 
-    <div class="dashboard-heading">
-        {% if session.get('user_id') %}
+    <section class="dashboard" id="dashboard">
+
+        <div class="dashboard-heading">
+            {% if session.get('user_id') %}
             <h2>Welcome, {{ session.get('full_name') }}! 🌸</h2>
             <p>Here's your personalized menstrual health overview.</p>
-        {% else %}
+            {% else %}
             <h2>Your Dashboard</h2>
             <p>Your menstrual health overview at a glance.</p>
-        {% endif %}
-    </div>
-
-    <!-- DASHBOARD CARDS -->
-
-    <div class="dashboard-cards">
-
-        <div class="dashboard-card">
-            <div class="card-icon">🌸</div>
-            <h3>Next Period</h3>
-            <p id="dashboardNextPeriod">Not calculated yet</p>
+            {% endif %}
         </div>
 
-        <div class="dashboard-card">
-            <div class="card-icon">📅</div>
-            <h3>Cycle Length</h3>
-            <p id="dashboardCycleLength">28 Days</p>
+        <!-- DASHBOARD CARDS -->
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <div class="card-icon">🌸</div>
+                <h3>Next Period</h3>
+                <p id="dashboardNextPeriod">Not calculated yet</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">📅</div>
+                <h3>Cycle Length</h3>
+                <p id="dashboardCycleLength">28 Days</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">💗</div>
+                <h3>Period Duration</h3>
+                <p id="dashboardDuration">5 Days</p>
+            </div>
+
         </div>
 
-        <div class="dashboard-card">
-            <div class="card-icon">💗</div>
-            <h3>Period Duration</h3>
-            <p id="dashboardDuration">5 Days</p>
+        <!-- CYCLE OVERVIEW -->
+
+        <div class="overview-card">
+
+            <h3>My Cycle Overview</h3>
+
+            <p id="dashboardMessage">
+                Enter your cycle details in the Cycle Tracker
+                to view your personalized cycle overview.
+            </p>
+
+            <a href="#tracker" class="dashboard-btn">
+                Update Cycle Details
+            </a>
+
         </div>
 
-    </div>
-
-    <!-- CYCLE OVERVIEW -->
-
-    <div class="overview-card">
-
-        <h3>My Cycle Overview</h3>
-
-        <p id="dashboardMessage">
-            Enter your cycle details in the Cycle Tracker
-            to view your personalized cycle overview.
-        </p>
-
-        <a href="#tracker" class="dashboard-btn">
-            Update Cycle Details
-        </a>
-
-    </div>
-
-</section>
+    </section>
 
 
 
@@ -132,21 +132,21 @@
     </section>
 
 
-<!-- CONTACT SECTION -->
-<section class="contact" id="contact">
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
 
-    <h2>Contact Us</h2>
+        <h2>Contact Us</h2>
 
-    <p>
-        Have questions or suggestions about LunaFlow?
-        We would love to hear from you.
-    </p>
+        <p>
+            Have questions or suggestions about LunaFlow?
+            We would love to hear from you.
+        </p>
 
-    <p>
-        Email: lunaflow.contact@gmail.com
-    </p>
+        <p>
+            Email: lunaflow.contact@gmail.com
+        </p>
 
-</section>
+    </section>
 
 
 
@@ -160,7 +160,7 @@
 
         <div class="tracker-card">
 
-            <form id="cycleForm">
+            <form id="cycleForm" novalidate>
 
                 <label for="lastPeriod">
                     First Day of Your Last Period
@@ -180,14 +180,13 @@
 
                 <input type="number" id="periodDuration" min="1" max="10" value="5" required>
 
-                <button type="button" onclick="predictCycle()">
+                <button type="submit">
                     Calculate My Cycle
                 </button>
 
             </form>
 
-            <div id="result"></div>
-
+            <div id="result" role="alert" aria-live="polite"></div>
         </div>
 
     </section>
@@ -263,7 +262,7 @@
 
         <div class="symptom-card">
 
-            <form id="symptomForm">
+            <form id="symptomForm" novalidate>
 
                 <label for="symptomDate">Select Date</label>
                 <input type="date" id="symptomDate" required>
@@ -288,7 +287,7 @@
 
                 <label for="mood">How is your mood?</label>
 
-                <select id="mood" required>
+                <select id="mood">
                     <option value="">Select your mood</option>
                     <option value="Happy">😊 Happy</option>
                     <option value="Calm">😌 Calm</option>
@@ -300,7 +299,7 @@
 
                 <label for="severity">Symptom Severity</label>
 
-                <select id="severity" required>
+                <select id="severity">
                     <option value="">Select severity</option>
                     <option value="Mild">Mild</option>
                     <option value="Moderate">Moderate</option>

@@ -194,16 +194,20 @@ def save_cycle():
         cursor.close()
         connection.close()
 
+
 @app.route("/get-cycle", methods=["GET"])
 def get_cycle():
 
     if "user_id" not in session:
         return jsonify({"message": "Please login first."}), 401
 
-    connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
+    connection = None
+    cursor = None
 
     try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
         cursor.execute(
             """
             SELECT last_period_date, cycle_length, period_duration
@@ -220,24 +224,71 @@ def get_cycle():
 
         return jsonify(cycle or {})
 
+    except mysql.connector.Error:
+
+        app.logger.exception("Database error while loading cycle")
+
+        return jsonify({
+            "message": "Unable to load cycle details. Please try again."
+        }), 500
+
     finally:
-        cursor.close()
-        connection.close()
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
 
 
 @app.route("/save-symptom", methods=["POST"])
 def save_symptom():
 
     if "user_id" not in session:
-        return jsonify({"message": "Please login first"}), 401
+        return jsonify({"message": "Please login first."}), 401
 
-    data = request.get_json()
+    data = request.get_json(silent=True)
+
+    if not isinstance(data, dict):
+        return jsonify({"message": "Invalid request data."}), 400
 
     entry_date = data.get("date")
     symptoms = data.get("symptoms", "")
     mood = data.get("mood", "")
     severity = data.get("severity", "")
     notes = data.get("notes", "")
+
+    # SERVER-SIDE VALIDATION
+
+    from datetime import date
+
+    try:
+        if not entry_date:
+            return jsonify({"message": "Date is required."}), 400
+
+        entry_date = date.fromisoformat(entry_date)
+
+        if entry_date > date.today():
+            return jsonify({"message": "Date cannot be in the future."}), 400
+
+    except (ValueError, TypeError):
+        return jsonify({"message": "Please enter a valid date."}), 400
+
+    if not isinstance(symptoms, str) or not symptoms.strip():
+        return jsonify({"message": "Please select at least one symptom."}), 400
+
+    if mood not in ["Happy", "Calm", "Irritated", "Sad",
+                    "Anxious", "Low Energy"]:
+        return jsonify({"message": "Please select a valid mood."}), 400
+
+    if severity not in ["Mild", "Moderate", "Severe"]:
+        return jsonify({"message": "Please select valid severity."}), 400
+
+    if not isinstance(notes, str):
+        return jsonify({"message": "Invalid notes."}), 400
+
+    connection = None
+    cursor = None
 
     try:
         connection = get_db_connection()
@@ -265,21 +316,36 @@ def save_symptom():
 
         connection.commit()
 
-        cursor.close()
-        connection.close()
-
         return jsonify({
             "message": "Symptom entry saved successfully!"
         })
 
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
+    except mysql.connector.Error:
+        if connection:
+            connection.rollback()
+
+        app.logger.exception("Database error while saving symptom")
+
+        return jsonify({
+            "message": "Unable to save your entry. Please try again."
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
 
 @app.route("/get-symptoms", methods=["GET"])
 def get_symptoms():
 
     if "user_id" not in session:
-        return jsonify({"message": "Please login first"}), 401
+        return jsonify({"message": "Please login first."}), 401
+
+    connection = None
+    cursor = None
 
     try:
         connection = get_db_connection()
@@ -299,19 +365,33 @@ def get_symptoms():
         for entry in entries:
             entry["entry_date"] = entry["entry_date"].isoformat()
 
-        cursor.close()
-        connection.close()
-
         return jsonify(entries)
 
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
+    except mysql.connector.Error:
+
+        app.logger.exception("Database error while loading symptoms")
+
+        return jsonify({
+            "message": "Unable to load symptom history. Please try again."
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
 
 @app.route("/delete-symptom/<int:entry_id>", methods=["DELETE"])
 def delete_symptom(entry_id):
 
     if "user_id" not in session:
-        return jsonify({"message": "Please login first"}), 401
+        return jsonify({"message": "Please login first."}), 401
+
+    connection = None
+    cursor = None
 
     try:
         connection = get_db_connection()
@@ -326,17 +406,32 @@ def delete_symptom(entry_id):
         connection.commit()
 
         if cursor.rowcount == 0:
+            return jsonify({
+                "message": "Entry not found."
+            }), 404
+
+        return jsonify({
+            "message": "Entry deleted successfully!"
+        })
+
+    except mysql.connector.Error:
+
+        if connection:
+            connection.rollback()
+
+        app.logger.exception("Database error while deleting symptom")
+
+        return jsonify({
+            "message": "Unable to delete entry. Please try again."
+        }), 500
+
+    finally:
+        if cursor:
             cursor.close()
+
+        if connection:
             connection.close()
-            return jsonify({"message": "Entry not found"}), 404
 
-        cursor.close()
-        connection.close()
-
-        return jsonify({"message": "Entry deleted successfully"})
-
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -228,11 +228,21 @@ function changeMonth(direction) {
     renderCalendar();
 }
 
+// HANDLE CYCLE FORM SUBMISSION AND LOAD CALENDAR
 
-// SHOW CALENDAR WHEN PAGE LOADS
 document.addEventListener("DOMContentLoaded", function () {
 
     renderCalendar();
+
+    const cycleForm = document.getElementById("cycleForm");
+
+    cycleForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        await predictCycle();
+
+    });
 
 });
 
@@ -260,9 +270,34 @@ document.addEventListener("DOMContentLoaded", function () {
         let severity = document.getElementById("severity").value;
         let notes = document.getElementById("notes").value;
 
+        let symptomResult = document.getElementById("symptomResult");
+
         if (!date) {
-            document.getElementById("symptomResult").innerText =
-                "Please select a date.";
+            symptomResult.innerText = "Please select a date.";
+            return;
+        }
+
+        let selectedDate = new Date(date + "T00:00:00");
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate > today) {
+            symptomResult.innerText = "Date cannot be in the future.";
+            return;
+        }
+
+        if (selectedSymptoms.length === 0) {
+            symptomResult.innerText = "Please select at least one symptom.";
+            return;
+        }
+
+        if (!mood) {
+            symptomResult.innerText = "Please select your mood.";
+            return;
+        }
+
+        if (!severity) {
+            symptomResult.innerText = "Please select symptom severity.";
             return;
         }
 
