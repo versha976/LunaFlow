@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LunaFlow - Your Cycle, Your Care</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+
+        <h1 class="logo">LunaFlow</h1>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#about">About</a>
+            <a href="#tracker">Cycle Tracker</a>
+            <a href="#calendar">Calendar</a>
+
+            {% if session.get('user_id') %}
+            <span class="welcome-user">
+                Welcome, {{ session.get('full_name') }}!
+            </span>
+            <a href="/logout" class="login-btn">Logout</a>
+            {% else %}
+            <a href="/login" class="login-btn">Login</a>
+            <a href="/register" class="login-btn">Register</a>
+            {% endif %}
+        </div>
+
+    </nav>
+
+
+
+    <!-- HOME SECTION -->
+    <section class="hero" id="home">
+
+        <h2>Your Cycle, Your Care</h2>
+
+        <p>
+            Understand your body, track your cycle,
+            and take care of your wellness.
+        </p>
+
+        <a href="#tracker" class="start-btn">
+            Get Started
+        </a>
+
+    </section>
+
+
+    <!-- USER DASHBOARD -->
+
+    
+<section class="dashboard" id="dashboard">
+
+    <div class="dashboard-heading">
+        {% if session.get('user_id') %}
+            <h2>Welcome, {{ session.get('full_name') }}! 🌸</h2>
+            <p>Here's your personalized menstrual health overview.</p>
+        {% else %}
+            <h2>Your Dashboard</h2>
+            <p>Your menstrual health overview at a glance.</p>
+        {% endif %}
+    </div>
+
+    <!-- DASHBOARD CARDS -->
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+            <div class="card-icon">🌸</div>
+            <h3>Next Period</h3>
+            <p id="dashboardNextPeriod">Not calculated yet</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📅</div>
+            <h3>Cycle Length</h3>
+            <p id="dashboardCycleLength">28 Days</p>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">💗</div>
+            <h3>Period Duration</h3>
+            <p id="dashboardDuration">5 Days</p>
+        </div>
+
+    </div>
+
+    <!-- CYCLE OVERVIEW -->
+
+    <div class="overview-card">
+
+        <h3>My Cycle Overview</h3>
+
+        <p id="dashboardMessage">
+            Enter your cycle details in the Cycle Tracker
+            to view your personalized cycle overview.
+        </p>
+
+        <a href="#tracker" class="dashboard-btn">
+            Update Cycle Details
+        </a>
+
+    </div>
+
+</section>
+
+
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+
+        <h2>About LunaFlow</h2>
+
+        <p>
+            LunaFlow helps you track your menstrual cycle,
+            understand your symptoms, and maintain your
+            menstrual health records in one place.
+        </p>
+
+    </section>
+
+
+    <!-- TRACKER SECTION -->
+
+    <section class="tracker" id="tracker">
+
+        <h2>Your Cycle Tracker</h2>
+
+        <p>Enter your cycle details to get an estimated next period date.</p>
+
+        <div class="tracker-card">
+
+            <form id="cycleForm">
+
+                <label for="lastPeriod">
+                    First Day of Your Last Period
+                </label>
+
+                <input type="date" id="lastPeriod" required>
+
+                <label for="cycleLength">
+                    Average Cycle Length (days)
+                </label>
+
+                <input type="number" id="cycleLength" min="21" max="45" value="28" required>
+
+                <label for="periodDuration">
+                    Period Duration (days)
+                </label>
+
+                <input type="number" id="periodDuration" min="1" max="10" value="5" required>
+
+                <button type="button" onclick="predictCycle()">
+                    Calculate My Cycle
+                </button>
+
+            </form>
+
+            <div id="result"></div>
+
+        </div>
+
+    </section>
+
+    <!-- MENSTRUAL CYCLE CALENDAR -->
+
+    <section class="calendar-section" id="calendar">
+
+        <h2>My Cycle Calendar</h2>
+
+        <p>Keep track of your cycle, one day at a time.</p>
+
+        <div class="calendar-card">
+
+            <!-- CALENDAR HEADER -->
+
+            <div class="calendar-header">
+
+                <button onclick="changeMonth(-1)">&#10094;</button>
+
+                <h3 id="monthYear">November 2026</h3>
+
+                <button onclick="changeMonth(1)">&#10095;</button>
+
+            </div>
+
+            <!-- WEEK DAYS -->
+
+            <div class="calendar-weekdays">
+
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+
+            </div>
+
+            <!-- CALENDAR DATES -->
+
+            <div class="calendar-days" id="calendarDays">
+            </div>
+
+            <!-- CALENDAR LEGEND -->
+
+            <div class="calendar-legend">
+
+                <span>
+                    <i class="period-dot"></i>
+                    Period
+                </span>
+
+                <span>
+                    <i class="predicted-dot"></i>
+                    Estimated Period
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SYMPTOM AND MOOD TRACKER -->
+
+    <section class="symptom-section" id="symptoms">
+
+        <h2>How Are You Feeling Today?</h2>
+
+        <p>Track your symptoms and understand your body's patterns.</p>
+
+        <div class="symptom-card">
+
+            <form id="symptomForm">
+
+                <label for="symptomDate">Select Date</label>
+                <input type="date" id="symptomDate" required>
+
+                <h3>Physical Symptoms</h3>
+
+                <div class="symptom-options">
+
+                    <label><input type="checkbox" name="symptoms" value="Cramps"> Cramps</label>
+
+                    <label><input type="checkbox" name="symptoms" value="Headache"> Headache</label>
+
+                    <label><input type="checkbox" name="symptoms" value="Bloating"> Bloating</label>
+
+                    <label><input type="checkbox" name="symptoms" value="Fatigue"> Fatigue</label>
+
+                    <label><input type="checkbox" name="symptoms" value="Back Pain"> Back Pain</label>
+
+                    <label><input type="checkbox" name="symptoms" value="Acne"> Acne</label>
+
+                </div>
+
+                <label for="mood">How is your mood?</label>
+
+                <select id="mood" required>
+                    <option value="">Select your mood</option>
+                    <option value="Happy">😊 Happy</option>
+                    <option value="Calm">😌 Calm</option>
+                    <option value="Irritated">😣 Irritated</option>
+                    <option value="Sad">😢 Sad</option>
+                    <option value="Anxious">😟 Anxious</option>
+                    <option value="Low Energy">😴 Low Energy</option>
+                </select>
+
+                <label for="severity">Symptom Severity</label>
+
+                <select id="severity" required>
+                    <option value="">Select severity</option>
+                    <option value="Mild">Mild</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Severe">Severe</option>
+                </select>
+
+                <label for="notes">Additional Notes</label>
+
+                <textarea id="notes" rows="4" placeholder="Write anything you want to remember..."></textarea>
+
+                <button type="submit">Save My Entry</button>
+
+            </form>
+
+            <div id="symptomResult"></div>
+
+        </div>
+
+    </section>
+
+    <!-- SYMPTOM HISTORY -->
+
+    <section class="history-section" id="history">
+
+        <h2>My Symptom History</h2>
+
+        <p>Look back at your previous health entries.</p>
+
+        <div class="history-container" id="historyContainer">
+
+            <!-- Saved entries will appear here using JavaScript -->
+
+            <div class="no-history">
+                <p>Your saved entries will appear here. 💗</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

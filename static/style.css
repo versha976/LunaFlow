@@ -1,0 +1,770 @@
+
+/* GENERAL SETTINGS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff7fb;
+    color: #49364d;
+}
+
+/* NAVIGATION BAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: white;
+    box-shadow: 0 3px 15px rgba(100, 50, 100, 0.08);
+}
+
+.logo {
+    color: #c45b85;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #725a78;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #cf6996;
+}
+
+.nav-links .login-btn {
+    background: #d8759c;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+}
+
+/* HERO SECTION */
+.hero {
+    text-align: center;
+    padding: 110px 20px;
+    background: linear-gradient(135deg, #ffe5ef, #eee5ff);
+}
+
+.hero h2 {
+    font-size: 45px;
+    color: #bd5d86;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 19px;
+    color: #806b85;
+    margin-bottom: 35px;
+    line-height: 1.7;
+}
+
+.start-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(135deg, #d8759c, #a987c8);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(190, 100, 150, 0.25);
+}
+
+/* ABOUT SECTION */
+.about {
+    text-align: center;
+    padding: 80px 15%;
+    background: white;
+}
+
+.about h2 {
+    color: #bd5d86;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about p {
+    color: #806b85;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* TRACKER SECTION */
+.tracker {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fff0f6, #f1eaff);
+}
+
+.tracker h2 {
+    color: #bd5d86;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.tracker p {
+    color: #806b85;
+    font-size: 18px;
+}
+
+/* MOBILE RESPONSIVE DESIGN */
+@media (max-width: 700px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero h2 {
+        font-size: 32px;
+    }
+
+    .about {
+        padding: 60px 25px;
+    }
+}
+
+/* CYCLE TRACKER SECTION */
+
+.tracker {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fff0f6, #f1eaff);
+}
+
+.tracker h2 {
+    color: #bd5d86;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.tracker p {
+    color: #806b85;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+/* TRACKER CARD */
+
+.tracker-card {
+    max-width: 500px;
+    margin: auto;
+    padding: 35px;
+    background: white;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
+}
+
+/* FORM */
+
+#cycleForm {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+#cycleForm label {
+    color: #765675;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 18px;
+}
+
+#cycleForm input {
+    padding: 13px;
+    border: 1px solid #e8cadd;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    color: #49364d;
+    background: #fffafd;
+}
+
+#cycleForm input:focus {
+    border-color: #d8759c;
+    box-shadow: 0 0 5px rgba(216, 117, 156, 0.2);
+}
+
+/* CALCULATE BUTTON */
+
+#cycleForm button {
+    margin-top: 28px;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #d8759c, #a987c8);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#cycleForm button:hover {
+    transform: translateY(-2px);
+}
+
+/* RESULT */
+
+#result {
+    margin-top: 25px;
+    color: #bd5d86;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+/* MENSTRUAL CYCLE CALENDAR */
+
+.calendar-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+}
+
+.calendar-section h2 {
+    color: #bd5d86;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.calendar-section > p {
+    color: #806b85;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+/* CALENDAR CARD */
+
+.calendar-card {
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    background: #fffafd;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
+}
+
+/* CALENDAR HEADER */
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.calendar-header h3 {
+    color: #bd5d86;
+    font-size: 23px;
+}
+
+.calendar-header button {
+    background: #f8e2ed;
+    color: #bd5d86;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+}
+
+/* WEEK DAYS */
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-weekdays {
+    margin-bottom: 15px;
+}
+
+.calendar-weekdays div {
+    color: #a16e91;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+/* CALENDAR DATES */
+
+.calendar-days div {
+    min-height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    color: #705b78;
+    background: #f8f1fa;
+    font-size: 15px;
+}
+
+/* EMPTY CALENDAR CELLS */
+
+.calendar-days .empty {
+    background: transparent;
+}
+
+/* PERIOD DATE */
+
+.calendar-days .period-day {
+    background: #e58aaf;
+    color: white;
+    font-weight: bold;
+}
+
+/* ESTIMATED PERIOD DATE */
+
+.calendar-days .predicted-day {
+    background: #c5a5e5;
+    color: white;
+    font-weight: bold;
+}
+
+/* CALENDAR LEGEND */
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    color: #806b85;
+    font-size: 14px;
+}
+
+.calendar-legend span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calendar-legend i {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+}
+
+.period-dot {
+    background: #e58aaf;
+}
+
+.predicted-dot {
+    background: #c5a5e5;
+}
+
+/* MOBILE CALENDAR */
+
+@media (max-width: 500px) {
+    .calendar-card {
+        padding: 15px;
+    }
+
+    .calendar-weekdays,
+    .calendar-days {
+        gap: 5px;
+    }
+
+    .calendar-days div {
+        min-height: 38px;
+        font-size: 13px;
+    }
+
+    .calendar-legend {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}
+
+/* USER DASHBOARD */
+
+.dashboard {
+    padding: 80px 8%;
+    background: linear-gradient(135deg, #fff5f9, #f3edff);
+    text-align: center;
+}
+
+/* DASHBOARD HEADING */
+
+.dashboard-heading h2 {
+    color: #bd5d86;
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.dashboard-heading p {
+    color: #806b85;
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1050px;
+    margin: auto;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 35px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card h3 {
+    color: #806b85;
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card p {
+    color: #c45b85;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+/* CYCLE OVERVIEW */
+
+.overview-card {
+    max-width: 1050px;
+    margin: 35px auto 0;
+    padding: 35px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
+}
+
+.overview-card h3 {
+    color: #bd5d86;
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+.overview-card p {
+    color: #806b85;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+/* DASHBOARD BUTTON */
+
+.dashboard-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(135deg, #d8759c, #a987c8);
+    color: white;
+    padding: 13px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.dashboard-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(190, 100, 150, 0.2);
+}
+
+/* RESPONSIVE DASHBOARD */
+
+@media (max-width: 768px) {
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        padding: 60px 6%;
+    }
+
+    .dashboard-heading h2 {
+        font-size: 29px;
+    }
+
+    .overview-card {
+        padding: 25px 18px;
+    }
+}
+
+/* SYMPTOM AND MOOD TRACKER */
+
+.symptom-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fff5f9, #f3edff);
+}
+
+.symptom-section h2 {
+    color: #bd5d86;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.symptom-section > p {
+    color: #806b85;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+/* SYMPTOM CARD */
+
+.symptom-card {
+    max-width: 600px;
+    margin: auto;
+    padding: 35px;
+    background: white;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
+}
+
+#symptomForm {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+#symptomForm > label {
+    color: #765675;
+    font-weight: 600;
+    margin: 18px 0 10px;
+}
+
+/* INPUT FIELDS */
+
+#symptomForm input[type="date"],
+#symptomForm select,
+#symptomForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #e8cadd;
+    border-radius: 10px;
+    background: #fffafd;
+    color: #705b78;
+    font-size: 15px;
+    outline: none;
+}
+
+#symptomForm input:focus,
+#symptomForm select:focus,
+#symptomForm textarea:focus {
+    border-color: #d8759c;
+}
+
+/* SYMPTOM OPTIONS */
+
+#symptomForm h3 {
+    color: #bd5d86;
+    margin-top: 30px;
+}
+
+.symptom-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.symptom-options label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px;
+    background: #fff3f8;
+    border-radius: 10px;
+    color: #806b85;
+    cursor: pointer;
+}
+
+.symptom-options input {
+    accent-color: #d8759c;
+    width: 16px;
+    height: 16px;
+}
+
+/* NOTES */
+
+#symptomForm textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* SAVE BUTTON */
+
+#symptomForm button {
+    margin-top: 28px;
+    padding: 14px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #d8759c, #a987c8);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#symptomForm button:hover {
+    transform: translateY(-2px);
+}
+
+/* RESULT MESSAGE */
+
+#symptomResult {
+    margin-top: 20px;
+    color: #bd5d86;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 500px) {
+    .symptom-card {
+        padding: 22px;
+    }
+
+    .symptom-options {
+        grid-template-columns: 1fr;
+    }
+
+    .symptom-section h2 {
+        font-size: 28px;
+    }
+}
+
+/* SYMPTOM HISTORY SECTION */
+
+.history-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fff5f9, #f3edff);
+}
+
+.history-section h2 {
+    color: #bd5d86;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.history-section > p {
+    color: #806b85;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+/* HISTORY CONTAINER */
+
+.history-container {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* HISTORY CARD */
+
+.history-card {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
+    text-align: left;
+    border-left: 5px solid #d8759c;
+}
+
+.history-card h3 {
+    color: #bd5d86;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.history-card p {
+    color: #806b85;
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+/* DELETE BUTTON */
+
+.history-card button {
+    margin-top: 15px;
+    padding: 10px 22px;
+    background: #f8e2ed;
+    color: #bd5d86;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.history-card button:hover {
+    background: #f2c8dc;
+}
+
+/* EMPTY HISTORY MESSAGE */
+
+.no-history {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    color: #806b85;
+    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.08);
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 500px) {
+    .history-card {
+        padding: 20px;
+    }
+
+    .history-section h2 {
+        font-size: 28px;
+    }
+}
