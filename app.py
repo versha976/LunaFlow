@@ -16,7 +16,8 @@ app.secret_key = os.getenv("SECRET_KEY")
 
 def get_db_connection():
     return mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
+        host="127.0.0.1",
+        port=3306,
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME")

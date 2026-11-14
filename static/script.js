@@ -220,11 +220,8 @@ function renderCalendar() {
 
 // CHANGE MONTH
 function changeMonth(direction) {
-
-    currentCalendarDate.setMonth(
-        currentCalendarDate.getMonth() + direction
-    );
-
+    currentCalendarDate.setDate(1);
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + direction);
     renderCalendar();
 }
 
