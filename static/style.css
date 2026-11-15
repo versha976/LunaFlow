@@ -1,5 +1,39 @@
 
-/* GENERAL SETTINGS */
+/* =========================================
+   1. LUNAFLOW - COLOR VARIABLES
+========================================= */
+
+:root {
+    --space: #170d2e;
+    --deep-purple: #281448;
+    --purple: #80509f;
+    --lavender: #c8a4f5;
+    --pink: #e64cac;
+    --light-pink: #ffc2f0;
+    --sky-blue: #83cbed;
+
+    --text-light: #fff0ff;
+    --text-dark: #57416c;
+    --text-muted: #806b85;
+
+    --glass: rgba(231, 205, 255, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.55);
+
+    --button-gradient: linear-gradient(
+        110deg,
+        #a64de0,
+        #d45bc4,
+        #ef83c5
+    );
+
+    --card-shadow: 0 10px 30px rgba(12, 5, 30, 0.25);
+}
+
+
+/* =========================================
+   2. GENERAL SETTINGS
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -11,25 +45,70 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #fff7fb;
-    color: #49364d;
+    min-height: 100vh;
+    background-color: var(--space);
+
+    background-image:
+        linear-gradient(
+            rgba(16, 5, 35, 0.30),
+            rgba(16, 5, 35, 0.45)
+        ),
+        url("/static/images/lunaflow-background.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: var(--text-light);
+    font-family: Arial, sans-serif;
 }
 
-/* NAVIGATION BAR */
+
+/* =========================================
+   3. NAVIGATION BAR - IMPROVED
+========================================= */
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 8%;
-    background: white;
-    box-shadow: 0 3px 15px rgba(100, 50, 100, 0.08);
+
+    padding: 10px 8%;
+    min-height: 90px;
+
+    background: rgba(25, 13, 48, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(220, 170, 255, 0.25);
+    border-radius: 20px;
+
+    box-shadow: 0 5px 25px rgba(10, 5, 30, 0.30);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navbar .logo img {
+    width: 180px;
+    height: 85px;
+    object-fit: contain;
+    display: block;
 }
 
 .logo {
-    color: #c45b85;
+    color: #efa9ef;
     font-size: 30px;
     letter-spacing: 1px;
+    text-shadow: 0 0 15px #d946a8;
 }
 
 .nav-links {
@@ -39,190 +118,342 @@ body {
 }
 
 .nav-links a {
+    position: relative;
     text-decoration: none;
-    color: #725a78;
+    color: #eadbff;
     font-size: 16px;
-    transition: 0.3s;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:not(.login-btn):not(.register-btn)::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 0;
+    bottom: -7px;
+    background: #f58bd9;
+    transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: #cf6996;
+    color: #f58bd9;
 }
 
-.nav-links .login-btn {
-    background: #d8759c;
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links .login-btn,
+.nav-links .register-btn {
+    background: var(--button-gradient);
     color: white;
-    padding: 10px 25px;
+    padding: 11px 27px;
     border-radius: 25px;
+    transition: 0.3s ease;
 }
 
-/* HERO SECTION */
+.nav-links .login-btn:hover,
+.nav-links .register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(230, 130, 255, 0.45);
+}
+
+
+
+
+/* =========================================
+   4. COMMON BUTTON STYLES
+========================================= */
+
+.start-btn,
+.dashboard-btn,
+#cycleForm button,
+#symptomForm button {
+    display: inline-block;
+
+    background: var(--button-gradient);
+    color: white;
+
+    border: none;
+    border-radius: 30px;
+
+    padding: 14px 30px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    box-shadow: 0 5px 20px rgba(205, 100, 230, 0.35);
+
+    transition: 0.3s ease;
+}
+
+.start-btn:hover,
+.dashboard-btn:hover,
+#cycleForm button:hover,
+#symptomForm button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(230, 130, 255, 0.65);
+}
+
+
+
+/* =========================================
+   5. HERO SECTION - IMPROVED
+========================================= */
+
 .hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 370px;
+    padding: 90px 7%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     text-align: center;
-    padding: 110px 20px;
-    background: linear-gradient(135deg, #ffe5ef, #eee5ff);
+    border-radius: 25px;
+
+    background:
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(230, 115, 220, 0.42),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(130, 90, 220, 0.40),
+            transparent 45%
+        ),
+        linear-gradient(
+            120deg,
+            rgba(34, 17, 65, 0.88),
+            rgba(75, 38, 105, 0.72)
+        );
+
+    border: 1px solid rgba(225, 175, 255, 0.30);
+
+    box-shadow: 0 10px 35px rgba(12, 5, 30, 0.20);
 }
 
 .hero h2 {
-    font-size: 45px;
-    color: #bd5d86;
-    margin-bottom: 20px;
+    font-size: clamp(36px, 5vw, 58px);
+    color: var(--light-pink);
+
+    margin-bottom: 22px;
+
+    text-shadow: 0 0 25px rgba(237, 128, 201, 0.70);
+    letter-spacing: 0.5px;
 }
 
 .hero p {
-    font-size: 19px;
-    color: #806b85;
-    margin-bottom: 35px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.8;
+
+    color: #f3e5ff;
+    margin-bottom: 38px;
+
+    max-width: 700px;
 }
 
 .start-btn {
-    display: inline-block;
-    text-decoration: none;
-    background: linear-gradient(135deg, #d8759c, #a987c8);
-    color: white;
-    padding: 15px 40px;
-    border-radius: 30px;
-    font-weight: bold;
-    transition: 0.3s;
+    padding: 16px 38px;
+    font-size: 17px;
+    letter-spacing: 0.3px;
+
+    box-shadow: 0 5px 25px rgba(205, 100, 230, 0.40);
 }
 
 .start-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(190, 100, 150, 0.25);
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 30px rgba(230, 130, 255, 0.60);
 }
 
-/* ABOUT SECTION */
+
+/* =========================================
+   6. ABOUT SECTION
+========================================= */
+
 .about {
     text-align: center;
     padding: 80px 15%;
-    background: white;
 }
 
 .about h2 {
-    color: #bd5d86;
+    color: var(--light-pink);
     font-size: 32px;
     margin-bottom: 20px;
 }
 
 .about p {
-    color: #806b85;
+    color: #e6dcf5;
     font-size: 18px;
     line-height: 1.8;
 }
 
-/* TRACKER SECTION */
-.tracker {
+
+
+/* =========================================
+   7. USER DASHBOARD - IMPROVED
+========================================= */
+
+.dashboard {
+    padding: 85px 8%;
     text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fff0f6, #f1eaff);
 }
 
-.tracker h2 {
-    color: #bd5d86;
-    font-size: 30px;
+/* DASHBOARD HEADING */
+
+.dashboard-heading h2 {
+    color: var(--light-pink);
+    font-size: clamp(30px, 4vw, 38px);
+    margin-bottom: 14px;
+
+    text-shadow: 0 0 15px rgba(237, 128, 201, 0.25);
+}
+
+.dashboard-heading p {
+    color: #e6dcf5;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 45px;
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+
+    max-width: 1100px;
+    margin: auto;
+}
+
+.dashboard-card {
+    padding: 38px 22px;
+    text-align: center;
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-7px);
+
+    box-shadow: 0 16px 35px rgba(12, 5, 30, 0.35);
+}
+
+/* CARD ICON */
+
+.card-icon {
+    font-size: 38px;
+    margin-bottom: 18px;
+}
+
+/* CARD TITLE */
+
+.dashboard-card h3 {
+    color: var(--text-dark);
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+/* CARD VALUE */
+
+.dashboard-card p {
+    color: #a64de0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* CYCLE OVERVIEW */
+
+.overview-card {
+    max-width: 1100px;
+    margin: 38px auto 0;
+    padding: 40px;
+    text-align: center;
+
+    transition: box-shadow 0.3s ease;
+}
+
+.overview-card:hover {
+    box-shadow: 0 16px 35px rgba(12, 5, 30, 0.30);
+}
+
+.overview-card h3 {
+    color: var(--purple);
+    font-size: 27px;
     margin-bottom: 20px;
 }
 
-.tracker p {
-    color: #806b85;
-    font-size: 18px;
+.overview-card p {
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.9;
+    margin-bottom: 28px;
 }
 
-/* MOBILE RESPONSIVE DESIGN */
-@media (max-width: 700px) {
+/* DASHBOARD RESPONSIVENESS */
 
-    .navbar {
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .hero h2 {
-        font-size: 32px;
-    }
-
-    .about {
-        padding: 60px 25px;
-    }
-}
-
-/* Additional Mobile Responsiveness */
-
-@media (max-width: 700px) {
-
-    .tracker,
-    .contact {
-        padding: 40px 20px;
-    }
-
-    .tracker-card {
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-    }
+@media (max-width: 768px) {
 
     .dashboard {
-        padding: 30px 15px;
+        padding: 60px 6%;
     }
 
-    .history-card {
-        width: 100%;
-        box-sizing: border-box;
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    input,
-    select,
-    textarea {
-        max-width: 100%;
-        box-sizing: border-box;
+    .dashboard-card {
+        padding: 30px 20px;
     }
 
-    .calendar {
-        width: 100%;
-        overflow-x: auto;
+    .overview-card {
+        padding: 28px 20px;
     }
 
 }
 
 
-/* CYCLE TRACKER SECTION */
+
+/* =========================================
+   8. CYCLE TRACKER
+========================================= */
 
 .tracker {
     text-align: center;
     padding: 80px 20px;
-    background: linear-gradient(135deg, #fff0f6, #f1eaff);
 }
 
 .tracker h2 {
-    color: #bd5d86;
+    color: var(--light-pink);
     font-size: 34px;
     margin-bottom: 15px;
 }
 
 .tracker p {
-    color: #806b85;
+    color: #e6dcf5;
     font-size: 17px;
     margin-bottom: 35px;
 }
-
-/* TRACKER CARD */
 
 .tracker-card {
     max-width: 500px;
     margin: auto;
     padding: 35px;
-    background: white;
-    border-radius: 22px;
-    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
 }
-
-/* FORM */
 
 #cycleForm {
     display: flex;
@@ -231,87 +462,69 @@ body {
 }
 
 #cycleForm label {
-    color: #765675;
+    color: var(--text-dark);
     font-weight: 600;
-    margin-bottom: 10px;
-    margin-top: 18px;
+    margin: 18px 0 10px;
 }
 
 #cycleForm input {
+    width: 100%;
     padding: 13px;
-    border: 1px solid #e8cadd;
+
+    border: 1px solid #cfb2e8;
     border-radius: 10px;
+
     outline: none;
     font-size: 15px;
-    color: #49364d;
-    background: #fffafd;
+
+    background: #f8f3ff;
+    color: #51416c;
 }
 
 #cycleForm input:focus {
-    border-color: #d8759c;
-    box-shadow: 0 0 5px rgba(216, 117, 156, 0.2);
+    border-color: #c46bdc;
+    box-shadow: 0 0 10px rgba(196, 107, 220, 0.35);
 }
-
-/* CALCULATE BUTTON */
 
 #cycleForm button {
     margin-top: 28px;
-    padding: 14px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(135deg, #d8759c, #a987c8);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
 }
-
-#cycleForm button:hover {
-    transform: translateY(-2px);
-}
-
-/* RESULT */
 
 #result {
     margin-top: 25px;
-    color: #bd5d86;
+    color: #80509f;
     font-size: 18px;
     font-weight: 600;
     line-height: 1.7;
 }
 
-/* MENSTRUAL CYCLE CALENDAR */
+
+/* =========================================
+   9. MENSTRUAL CYCLE CALENDAR
+========================================= */
 
 .calendar-section {
     text-align: center;
     padding: 80px 20px;
-    background: white;
 }
 
 .calendar-section h2 {
-    color: #bd5d86;
+    color: var(--light-pink);
     font-size: 34px;
     margin-bottom: 15px;
 }
 
 .calendar-section > p {
-    color: #806b85;
+    color: #e6dcf5;
     font-size: 17px;
     margin-bottom: 35px;
 }
-
-/* CALENDAR CARD */
 
 .calendar-card {
     max-width: 650px;
     margin: auto;
     padding: 30px;
-    background: #fffafd;
-    border-radius: 22px;
-    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
 }
-
-/* CALENDAR HEADER */
 
 .calendar-header {
     display: flex;
@@ -321,23 +534,23 @@ body {
 }
 
 .calendar-header h3 {
-    color: #bd5d86;
+    color: var(--purple);
     font-size: 23px;
 }
 
 .calendar-header button {
-    background: #f8e2ed;
-    color: #bd5d86;
+    background: linear-gradient(135deg, #dba6ef, #aaa8f5);
+    color: white;
+
     border: none;
     border-radius: 50%;
+
     width: 40px;
     height: 40px;
+
     cursor: pointer;
     font-size: 18px;
-    padding: 0;
 }
-
-/* WEEK DAYS */
 
 .calendar-weekdays,
 .calendar-days {
@@ -351,54 +564,48 @@ body {
 }
 
 .calendar-weekdays div {
-    color: #a16e91;
+    color: #9365ac;
     font-weight: bold;
     padding: 10px 0;
 }
 
-/* CALENDAR DATES */
-
 .calendar-days div {
     min-height: 48px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     border-radius: 12px;
-    color: #705b78;
-    background: #f8f1fa;
+
+    color: var(--text-dark);
+    background: #e9e6fb;
     font-size: 15px;
 }
-
-/* EMPTY CALENDAR CELLS */
 
 .calendar-days .empty {
     background: transparent;
 }
 
-/* PERIOD DATE */
-
 .calendar-days .period-day {
-    background: #e58aaf;
+    background: linear-gradient(135deg, #e64cac, #c17bda);
     color: white;
     font-weight: bold;
 }
-
-/* ESTIMATED PERIOD DATE */
 
 .calendar-days .predicted-day {
-    background: #c5a5e5;
+    background: linear-gradient(135deg, #9297ef, #83cbed);
     color: white;
     font-weight: bold;
 }
-
-/* CALENDAR LEGEND */
 
 .calendar-legend {
     display: flex;
     justify-content: center;
     gap: 30px;
     margin-top: 30px;
-    color: #806b85;
+
+    color: var(--text-dark);
     font-size: 14px;
 }
 
@@ -415,142 +622,277 @@ body {
 }
 
 .period-dot {
-    background: #e58aaf;
+    background: #e64cac;
 }
 
 .predicted-dot {
-    background: #c5a5e5;
+    background: #9297ef;
 }
 
-/* MOBILE CALENDAR */
 
-@media (max-width: 500px) {
-    .calendar-card {
-        padding: 15px;
-    }
+/* =========================================
+   10. SYMPTOM AND MOOD TRACKER
+========================================= */
 
-    .calendar-weekdays,
-    .calendar-days {
-        gap: 5px;
-    }
-
-    .calendar-days div {
-        min-height: 38px;
-        font-size: 13px;
-    }
-
-    .calendar-legend {
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-}
-
-/* USER DASHBOARD */
-
-.dashboard {
-    padding: 80px 8%;
-    background: linear-gradient(135deg, #fff5f9, #f3edff);
+.symptom-section {
     text-align: center;
+    padding: 80px 20px;
 }
 
-/* DASHBOARD HEADING */
-
-.dashboard-heading h2 {
-    color: #bd5d86;
-    font-size: 36px;
-    margin-bottom: 12px;
+.symptom-section h2 {
+    color: var(--light-pink);
+    font-size: 34px;
+    margin-bottom: 15px;
 }
 
-.dashboard-heading p {
-    color: #806b85;
+.symptom-section > p {
+    color: #e6dcf5;
     font-size: 17px;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
-/* DASHBOARD CARDS */
-
-.dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    max-width: 1050px;
+.symptom-card {
+    max-width: 600px;
     margin: auto;
-}
-
-.dashboard-card {
-    background: white;
-    padding: 35px 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
-    transition: 0.3s;
-}
-
-.dashboard-card:hover {
-    transform: translateY(-5px);
-}
-
-.card-icon {
-    font-size: 35px;
-    margin-bottom: 15px;
-}
-
-.dashboard-card h3 {
-    color: #806b85;
-    font-size: 19px;
-    margin-bottom: 15px;
-}
-
-.dashboard-card p {
-    color: #c45b85;
-    font-size: 21px;
-    font-weight: bold;
-}
-
-/* CYCLE OVERVIEW */
-
-.overview-card {
-    max-width: 1050px;
-    margin: 35px auto 0;
     padding: 35px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
 }
 
-.overview-card h3 {
-    color: #bd5d86;
-    font-size: 25px;
-    margin-bottom: 18px;
+#symptomForm {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
-.overview-card p {
-    color: #806b85;
+#symptomForm > label {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin: 18px 0 10px;
+}
+
+#symptomForm input[type="date"],
+#symptomForm select,
+#symptomForm textarea {
+    width: 100%;
+    padding: 13px;
+
+    border: 1px solid #cfb2e8;
+    border-radius: 10px;
+
+    background: #f8f3ff;
+    color: #51416c;
+
+    font-size: 15px;
+    outline: none;
+}
+
+#symptomForm input:focus,
+#symptomForm select:focus,
+#symptomForm textarea:focus {
+    border-color: #c46bdc;
+    box-shadow: 0 0 10px rgba(196, 107, 220, 0.35);
+}
+
+#symptomForm h3 {
+    color: var(--purple);
+    margin-top: 30px;
+}
+
+.symptom-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.symptom-options label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 13px;
+
+    background: #eee5fb;
+    border-radius: 10px;
+
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+.symptom-options input {
+    accent-color: #c24cbb;
+    width: 16px;
+    height: 16px;
+}
+
+#symptomForm textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+#symptomForm button {
+    margin-top: 28px;
+}
+
+#symptomResult {
+    margin-top: 20px;
+    color: #80509f;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   11. SYMPTOM HISTORY
+========================================= */
+
+.history-section {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.history-section h2 {
+    color: var(--light-pink);
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.history-section > p {
+    color: #e6dcf5;
     font-size: 17px;
-    line-height: 1.8;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 }
 
-/* DASHBOARD BUTTON */
+.history-container {
+    max-width: 800px;
+    margin: auto;
 
-.dashboard-btn {
-    display: inline-block;
-    text-decoration: none;
-    background: linear-gradient(135deg, #d8759c, #a987c8);
-    color: white;
-    padding: 13px 30px;
-    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-card {
+    padding: 25px 30px;
+    text-align: left;
+
+    border-left: 5px solid #c16ad5;
+}
+
+.history-card h3 {
+    color: var(--purple);
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.history-card p {
+    color: var(--text-dark);
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.history-card button {
+    margin-top: 15px;
+    padding: 10px 22px;
+
+    background: #eadcf8;
+    color: #80519e;
+
+    border: none;
+    border-radius: 20px;
+
     font-weight: bold;
-    transition: 0.3s;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.dashboard-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(190, 100, 150, 0.2);
+.history-card button:hover {
+    background: #d9c2f0;
 }
 
-/* RESPONSIVE DASHBOARD */
+.no-history {
+    padding: 35px;
+    color: var(--text-dark);
+}
+
+
+/* =========================================
+   12. CONTACT SECTION
+========================================= */
+
+.contact {
+    padding: 70px 25px;
+    text-align: center;
+
+    background: rgba(25, 19, 47, 0.65);
+    backdrop-filter: blur(10px);
+}
+
+.contact h2 {
+    font-size: 32px;
+    color: #e9b0f0;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 16px;
+    color: #e6dcf5;
+
+    line-height: 1.8;
+    margin: 12px auto;
+    max-width: 600px;
+}
+
+.contact p:last-child {
+    display: inline-block;
+
+    background: rgba(238, 226, 255, 0.95);
+    color: #76518e;
+
+    padding: 12px 25px;
+    border-radius: 25px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   13. GLASS CARD DESIGN
+========================================= */
+
+.dashboard-card,
+.overview-card,
+.tracker-card,
+.calendar-card,
+.symptom-card,
+.history-card,
+.no-history {
+    background: var(--glass);
+
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
+
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(16px);
+}
+
+
+/* =========================================
+   14. RESPONSIVE DESIGN - TABLETS
+========================================= */
 
 @media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
 
     .dashboard-cards {
         grid-template-columns: 1fr;
@@ -567,1125 +909,293 @@ body {
     .overview-card {
         padding: 25px 18px;
     }
+
+    .hero {
+        padding: 75px 20px;
+    }
+
+    .tracker-card,
+    .history-card {
+        width: 100%;
+    }
 }
 
-/* SYMPTOM AND MOOD TRACKER */
 
-.symptom-section {
-    text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fff5f9, #f3edff);
-}
-
-.symptom-section h2 {
-    color: #bd5d86;
-    font-size: 34px;
-    margin-bottom: 15px;
-}
-
-.symptom-section > p {
-    color: #806b85;
-    font-size: 17px;
-    margin-bottom: 35px;
-}
-
-/* SYMPTOM CARD */
-
-.symptom-card {
-    max-width: 600px;
-    margin: auto;
-    padding: 35px;
-    background: white;
-    border-radius: 22px;
-    box-shadow: 0 8px 30px rgba(130, 80, 130, 0.12);
-}
-
-#symptomForm {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-#symptomForm > label {
-    color: #765675;
-    font-weight: 600;
-    margin: 18px 0 10px;
-}
-
-/* INPUT FIELDS */
-
-#symptomForm input[type="date"],
-#symptomForm select,
-#symptomForm textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 13px;
-    border: 1px solid #e8cadd;
-    border-radius: 10px;
-    background: #fffafd;
-    color: #705b78;
-    font-size: 15px;
-    outline: none;
-}
-
-#symptomForm input:focus,
-#symptomForm select:focus,
-#symptomForm textarea:focus {
-    border-color: #d8759c;
-}
-
-/* SYMPTOM OPTIONS */
-
-#symptomForm h3 {
-    color: #bd5d86;
-    margin-top: 30px;
-}
-
-.symptom-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.symptom-options label {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 13px;
-    background: #fff3f8;
-    border-radius: 10px;
-    color: #806b85;
-    cursor: pointer;
-}
-
-.symptom-options input {
-    accent-color: #d8759c;
-    width: 16px;
-    height: 16px;
-}
-
-/* NOTES */
-
-#symptomForm textarea {
-    resize: vertical;
-    font-family: inherit;
-}
-
-/* SAVE BUTTON */
-
-#symptomForm button {
-    margin-top: 28px;
-    padding: 14px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(135deg, #d8759c, #a987c8);
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#symptomForm button:hover {
-    transform: translateY(-2px);
-}
-
-/* RESULT MESSAGE */
-
-#symptomResult {
-    margin-top: 20px;
-    color: #bd5d86;
-    font-weight: 600;
-    line-height: 1.7;
-}
-
-/* MOBILE DESIGN */
+/* =========================================
+   15. RESPONSIVE DESIGN - MOBILE
+========================================= */
 
 @media (max-width: 500px) {
+
+    .navbar {
+        padding: 15px;
+    }
+
+    .navbar .logo img {
+        width: 160px;
+        height: 80px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .hero h2 {
+        font-size: 32px;
+    }
+
+    .about {
+        padding: 60px 25px;
+    }
+
+    .tracker,
+    .contact {
+        padding: 40px 20px;
+    }
+
+    .tracker-card,
     .symptom-card {
         padding: 22px;
+    }
+
+    .dashboard {
+        padding: 40px 15px;
+    }
+
+    .history-card {
+        padding: 20px;
+    }
+
+    .calendar-card {
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    .calendar-weekdays,
+    .calendar-days {
+        gap: 5px;
+    }
+
+    .calendar-days div {
+        min-height: 38px;
+        font-size: 13px;
+    }
+
+    .calendar-legend {
+        gap: 15px;
+        flex-wrap: wrap;
     }
 
     .symptom-options {
         grid-template-columns: 1fr;
     }
 
-    .symptom-section h2 {
+    .symptom-section h2,
+    .history-section h2,
+    .calendar-section h2 {
         font-size: 28px;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 100%;
     }
 }
 
-/* SYMPTOM HISTORY SECTION */
+/* =========================================
+   16. LOGIN PAGE
+========================================= */
 
-.history-section {
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 460px;
+    padding: 45px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    background: rgba(35, 18, 65, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 15px 45px rgba(10, 3, 30, 0.4);
     text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fff5f9, #f3edff);
 }
 
-.history-section h2 {
-    color: #bd5d86;
-    font-size: 34px;
-    margin-bottom: 15px;
+/* LOGO AND HEADINGS */
+
+.auth-box h1 {
+    color: #f5b5e5;
+    font-size: 36px;
+    margin-bottom: 18px;
+    text-shadow: 0 0 15px rgba(245, 181, 229, 0.3);
 }
 
-.history-section > p {
-    color: #806b85;
-    font-size: 17px;
-    margin-bottom: 35px;
+.auth-box h2 {
+    color: #ffffff;
+    font-size: 27px;
+    margin-bottom: 12px;
 }
 
-/* HISTORY CONTAINER */
+.auth-box > p {
+    color: #e6d9fa;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
 
-.history-container {
-    max-width: 800px;
-    margin: auto;
+/* LOGIN FORM */
+
+.auth-box form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-/* HISTORY CARD */
-
-.history-card {
-    background: white;
-    padding: 25px 30px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.10);
     text-align: left;
-    border-left: 5px solid #d8759c;
+    gap: 10px;
 }
 
-.history-card h3 {
-    color: #bd5d86;
-    font-size: 20px;
-    margin-bottom: 15px;
+.auth-box form label {
+    color: #f4d9f1;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
 }
 
-.history-card p {
-    color: #806b85;
-    font-size: 16px;
-    margin: 10px 0;
-    line-height: 1.6;
+.auth-box form input {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #302044;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s ease;
 }
 
-/* DELETE BUTTON */
+.auth-box form input:focus {
+    border-color: #e6a5f2;
+    box-shadow: 0 0 0 3px rgba(230, 165, 242, 0.2);
+}
 
-.history-card button {
-    margin-top: 15px;
-    padding: 10px 22px;
-    background: #f8e2ed;
-    color: #bd5d86;
+.auth-box form input::placeholder {
+    color: #8c8199;
+}
+
+/* LOGIN BUTTON */
+
+.auth-box form button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
     border: none;
-    border-radius: 20px;
-    font-weight: bold;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #d879c5, #9160d8);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.history-card button:hover {
-    background: #f2c8dc;
+.auth-box form button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(216, 121, 197, 0.35);
 }
 
-/* EMPTY HISTORY MESSAGE */
+/* REGISTER LINK */
 
-.no-history {
-    background: white;
-    padding: 35px;
-    border-radius: 18px;
-    color: #806b85;
-    box-shadow: 0 8px 25px rgba(130, 80, 130, 0.08);
+.auth-box > p:last-child {
+    margin-top: 25px;
+    margin-bottom: 0;
+    color: #e6d9fa;
+    font-size: 14px;
 }
 
-/* MOBILE DESIGN */
+.auth-box > p:last-child a {
+    color: #f2a8e2;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-box > p:last-child a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* MOBILE RESPONSIVE */
 
 @media (max-width: 500px) {
-    .history-card {
-        padding: 20px;
+    .auth-box {
+        padding: 35px 24px;
     }
 
-    .history-section h2 {
-        font-size: 28px;
+    .auth-box h1 {
+        font-size: 30px;
     }
-}
 
-/* CONTACT SECTION */
-
-.contact {
-    background: linear-gradient(135deg, #fce4ec, #f3e5f5);
-    padding: 70px 25px;
-    text-align: center;
-}
-
-.contact h2 {
-    font-size: 32px;
-    color: #b04b7b;
-    margin-bottom: 20px;
-}
-
-.contact p {
-    font-size: 16px;
-    color: #665466;
-    line-height: 1.8;
-    margin: 12px auto;
-    max-width: 600px;
-}
-
-.contact p:last-child {
-    display: inline-block;
-    background: white;
-    padding: 12px 25px;
-    border-radius: 25px;
-    color: #b04b7b;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(176, 75, 123, 0.12);
-}
-
-
-
-/* ==========================================
-   LUNAFLOW - DREAMY COSMIC GALAXY THEME
-   ========================================== */
-
-:root {
-    --magenta: #d946a8;
-    --orchid: #d6a0e8;
-    --mauve: #b784c7;
-    --pastel-blue: #a9d8f5;
-    --lavender-blue: #aaa8f0;
-    --deep-space: #292044;
-    --soft-white: #fffaff;
-    --text-color: #51416c;
-}
-
-/* MAIN GALAXY BACKGROUND */
-
-body {
-    background:
-        radial-gradient(ellipse at 15% 20%, rgba(217, 70, 168, 0.30), transparent 40%),
-        radial-gradient(ellipse at 85% 15%, rgba(169, 216, 245, 0.40), transparent 40%),
-        radial-gradient(ellipse at 50% 75%, rgba(170, 168, 240, 0.35), transparent 45%),
-        linear-gradient(135deg, #292044, #49345f, #514a83, #39345f);
-
-    color: var(--soft-white);
-    min-height: 100vh;
-    position: relative;
-}
-
-/* TWINKLING STARS */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-
-    background-image:
-        radial-gradient(2px 2px at 10% 20%, white 99%, transparent),
-        radial-gradient(2px 2px at 25% 70%, #f5caff 99%, transparent),
-        radial-gradient(3px 3px at 45% 15%, white 99%, transparent),
-        radial-gradient(2px 2px at 65% 45%, #c9e9ff 99%, transparent),
-        radial-gradient(3px 3px at 80% 25%, white 99%, transparent),
-        radial-gradient(2px 2px at 90% 75%, #f5caff 99%, transparent),
-        radial-gradient(2px 2px at 35% 90%, white 99%, transparent),
-        radial-gradient(3px 3px at 72% 88%, #d9caff 99%, transparent);
-
-    background-size: 350px 350px;
-    animation: starTwinkle 5s ease-in-out infinite alternate;
-}
-
-@keyframes starTwinkle {
-    from {
-        opacity: 0.35;
-    }
-    to {
-        opacity: 1;
+    .auth-box h2 {
+        font-size: 23px;
     }
 }
 
-/* KEEP CONTENT ABOVE THE STARS */
+/* =========================================
+   17. REGISTER PAGE
+========================================= */
 
-body > * {
-    position: relative;
-    z-index: 1;
+.auth-box:has(form[action="/register"]) {
+    max-width: 480px;
+    padding: 38px 40px;
 }
 
-/* NAVIGATION */
-
-.navbar {
-    background: rgba(43, 32, 70, 0.82);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 4px 25px rgba(10, 5, 30, 0.25);
+.auth-box:has(form[action="/register"]) h2 {
+    font-size: 25px;
 }
+
+.auth-box:has(form[action="/register"]) form button {
+    margin-top: 20px;
+}
+
+@media (max-width: 500px) {
+    .auth-box:has(form[action="/register"]) {
+        padding: 30px 24px;
+    }
+}
+
+/* LUNAFLOW LOGO */
 
 .logo {
-    color: #e6a5f2;
+    display: flex;
+    align-items: center;
 }
 
-.nav-links a {
-    color: #e6d9fa;
+.logo img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-.nav-links a:hover {
-    color: #f3a8df;
+.logo img:hover {
+    transform: scale(1.08);
 }
 
-.nav-links .login-btn {
-    background: linear-gradient(120deg, var(--magenta), var(--lavender-blue));
-}
-
-/* HERO SECTION */
-
-.hero {
-    background:
-        radial-gradient(circle at 20% 30%, rgba(217,70,168,0.45), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(169,216,245,0.35), transparent 40%),
-        linear-gradient(135deg, rgba(67,45,99,0.85), rgba(48,43,91,0.9));
-}
-
-.hero h2 {
-    color: #f1b5ef;
-    text-shadow: 0 0 18px rgba(217,70,168,0.5);
-}
-
-.hero p {
-    color: #e4d8f5;
-}
-
-/* COSMIC BUTTONS */
-
-.start-btn,
-.dashboard-btn,
-#cycleForm button,
-#symptomForm button {
-    background: linear-gradient(
-        120deg,
-        #d946a8,
-        #b784c7,
-        #858fe0,
-        #83c9ec
-    );
-
-    box-shadow: 0 5px 22px rgba(185, 120, 225, 0.25);
-}
-
-.start-btn:hover,
-.dashboard-btn:hover {
-    box-shadow: 0 0 25px rgba(210, 150, 245, 0.6);
-}
-
-/* COMMON SECTION BACKGROUNDS */
-
-.about,
-.calendar-section {
-    background: rgba(49, 39, 78, 0.72);
-    backdrop-filter: blur(12px);
-}
-
-.tracker,
-.dashboard,
-.symptom-section,
-.history-section {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(71, 47, 103, 0.78),
-            rgba(53, 58, 110, 0.78),
-            rgba(82, 52, 103, 0.78)
-        );
-    backdrop-filter: blur(10px);
-}
-
-.about h2,
-.tracker h2,
-.calendar-section h2,
-.dashboard-heading h2,
-.symptom-section h2,
-.history-section h2 {
-    color: #e6aaf1;
-    text-shadow: 0 0 15px rgba(217, 70, 168, 0.25);
-}
-
-.about p,
-.tracker p,
-.calendar-section > p,
-.dashboard-heading p,
-.symptom-section > p,
-.history-section > p {
-    color: #e0d6f2;
-}
-
-/* GLASS EFFECT CARDS */
-
-.tracker-card,
-.calendar-card,
-.dashboard-card,
-.overview-card,
-.symptom-card,
-.history-card,
-.no-history {
-    background: rgba(239, 231, 255, 0.94);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    box-shadow: 0 10px 35px rgba(12, 8, 35, 0.25);
-    color: var(--text-color);
-}
-
-/* CARD HEADINGS */
-
-.tracker-card h2,
-.calendar-header h3,
-.dashboard-card h3,
-.overview-card h3,
-.symptom-card h3,
-.history-card h3 {
-    color: #81529e;
-}
-
-.dashboard-card p,
-.overview-card p,
-.history-card p {
-    color: #69577f;
-}
-
-/* INPUT FIELDS */
-
-#cycleForm input,
-#symptomForm input[type="date"],
-#symptomForm select,
-#symptomForm textarea {
-    background: #f8f4ff;
-    border: 1px solid #c9b3e6;
-    color: #51416c;
-}
-
-#cycleForm input:focus,
-#symptomForm input:focus,
-#symptomForm select:focus,
-#symptomForm textarea:focus {
-    border-color: #bd78d8;
-    box-shadow: 0 0 9px rgba(189, 120, 216, 0.3);
-}
-
-/* FORM LABELS */
-
-#cycleForm label,
-#symptomForm > label {
-    color: #75528d;
-}
-
-/* SYMPTOM OPTIONS */
-
-.symptom-options label {
-    background: #eee5fb;
-    color: #65517c;
-}
-
-.symptom-options input {
-    accent-color: #b45bd1;
-}
-
-/* CALENDAR */
-
-.calendar-card {
-    background: rgba(244, 239, 255, 0.96);
-}
-
-.calendar-header h3 {
-    color: #81529e;
-}
-
-.calendar-header button {
-    background: linear-gradient(135deg, #d6a0e8, #aaa8f0);
-    color: white;
-}
-
-.calendar-weekdays div {
-    color: #9365ac;
-}
-
-.calendar-days div {
-    background: #e9e6fb;
-    color: #574b79;
-}
-
-.calendar-days .period-day {
-    background: linear-gradient(135deg, #d946a8, #bd78d8);
-    color: white;
-}
-
-.calendar-days .predicted-day {
-    background: linear-gradient(135deg, #9c9be8, #83c9ec);
-    color: white;
-}
-
-.calendar-legend {
-    color: #66577f;
-}
-
-.period-dot {
-    background: #d946a8;
-}
-
-.predicted-dot {
-    background: #9c9be8;
-}
-
-/* HISTORY */
-
-.history-card {
-    border-left: 5px solid #c16ad5;
-}
-
-.history-card button {
-    background: #eadcf8;
-    color: #80519e;
-}
-
-.history-card button:hover {
-    background: #d9c2f0;
-}
-
-/* CONTACT */
-
-.contact {
-    background:
-        linear-gradient(
-            135deg,
-            #38274f,
-            #514477,
-            #343f70
-        );
-}
-
-.contact h2 {
-    color: #e9b0f0;
-}
-
-.contact p {
-    color: #e6dcf5;
-}
-
-.contact p:last-child {
-    background: rgba(238, 226, 255, 0.95);
-    color: #76518e;
-}
-
-/* RESULT MESSAGES */
-
-#result,
-#symptomResult {
-    color: #a45cbd;
-}
-
-/* MOBILE COSMIC DESIGN */
-
-@media (max-width: 700px) {
-    .navbar {
-        background: rgba(43, 32, 70, 0.95);
-    }
-
-    .hero {
-        padding: 75px 20px;
+@media (max-width: 768px) {
+    .logo img {
+        width: 65px;
+        height: 65px;
     }
 }
-
-
-
-/* =====================================
-   LUNAFLOW - VISIBLE DREAMY GALAXY
-   ===================================== */
-
-body {
-    background-color: #211936 !important;
-
-    background-image:
-        radial-gradient(ellipse at 15% 20%, rgba(229, 53, 177, 0.55), transparent 45%),
-        radial-gradient(ellipse at 85% 25%, rgba(110, 155, 255, 0.50), transparent 45%),
-        radial-gradient(ellipse at 55% 80%, rgba(174, 103, 220, 0.50), transparent 50%),
-        radial-gradient(ellipse at 5% 90%, rgba(105, 190, 235, 0.35), transparent 40%),
-        linear-gradient(135deg, #211936, #40305f, #29274e) !important;
-
-    background-attachment: fixed !important;
-    overflow-x: hidden;
-}
-
-/* LAYER 1: GLOWING NEBULA CLOUDS */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: -50px;
-    z-index: 9997;
-    pointer-events: none;
-
-    background:
-        radial-gradient(ellipse at 20% 30%,
-            rgba(255, 65, 190, 0.24), transparent 35%),
-        radial-gradient(ellipse at 75% 20%,
-            rgba(125, 155, 255, 0.25), transparent 35%),
-        radial-gradient(ellipse at 60% 75%,
-            rgba(205, 125, 255, 0.25), transparent 40%),
-        radial-gradient(ellipse at 10% 85%,
-            rgba(105, 205, 255, 0.20), transparent 35%);
-
-    filter: blur(35px);
-    mix-blend-mode: screen;
-    animation: nebulaGlow 12s ease-in-out infinite alternate;
-}
-
-@keyframes nebulaGlow {
-    from {
-        opacity: 0.45;
-        transform: scale(1);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1.08);
-    }
-}
-
-/* LAYER 2: STARS EVERYWHERE */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    pointer-events: none;
-
-    background-image:
-        radial-gradient(2px 2px at 10% 10%, #ffffff 99%, transparent),
-        radial-gradient(3px 3px at 25% 35%, #ffe5ff 99%, transparent),
-        radial-gradient(2px 2px at 45% 15%, #ffffff 99%, transparent),
-        radial-gradient(3px 3px at 65% 30%, #c9e8ff 99%, transparent),
-        radial-gradient(2px 2px at 85% 12%, #ffffff 99%, transparent),
-        radial-gradient(3px 3px at 92% 55%, #f5caff 99%, transparent),
-        radial-gradient(2px 2px at 15% 75%, #ffffff 99%, transparent),
-        radial-gradient(3px 3px at 40% 85%, #d9d5ff 99%, transparent),
-        radial-gradient(2px 2px at 75% 90%, #ffffff 99%, transparent),
-        radial-gradient(2px 2px at 55% 60%, #f5caff 99%, transparent);
-
-    background-size: 350px 350px;
-    background-repeat: repeat;
-
-    opacity: 0.75;
-    mix-blend-mode: screen;
-
-    animation: cosmicTwinkle 4s ease-in-out infinite alternate;
-}
-
-@keyframes cosmicTwinkle {
-    from {
-        opacity: 0.35;
-    }
-    to {
-        opacity: 0.95;
-    }
-}
-
-/* GLASS-LIKE SECTION BACKGROUNDS */
-
-.hero,
-.tracker,
-.dashboard,
-.symptom-section,
-.history-section {
-    background-color: rgba(43, 32, 75, 0.35) !important;
-}
-
-.about,
-.calendar-section {
-    background-color: rgba(43, 32, 75, 0.40) !important;
-}
-
-/* KEEP CARDS READABLE */
-
-.tracker-card,
-.calendar-card,
-.dashboard-card,
-.overview-card,
-.symptom-card,
-.history-card,
-.no-history {
-    background: rgba(245, 239, 255, 0.93) !important;
-}
-
-
-
-/* ==========================================
-   LUNAFLOW - DREAMY COSMIC GALAXY THEME
-   ========================================== */
-
-:root {
-    --magenta: #ed55bb;
-    --orchid: #dba6ef;
-    --mauve: #bb91d5;
-    --pastel-blue: #a9dafa;
-    --lavender: #aaa8f5;
-    --space: #171329;
-    --text: #f8edff;
-}
-
-/* MAIN SPACE BACKGROUND */
-
-body {
-    font-family: 'Segoe UI', sans-serif;
-    color: var(--text);
-    background-color: var(--space) !important;
-    background-image:
-        radial-gradient(ellipse at 15% 25%,
-            rgba(229, 55, 178, .65), transparent 38%),
-        radial-gradient(ellipse at 85% 20%,
-            rgba(116, 139, 255, .55), transparent 40%),
-        radial-gradient(ellipse at 55% 85%,
-            rgba(177, 103, 222, .55), transparent 45%),
-        radial-gradient(ellipse at 5% 90%,
-            rgba(91, 193, 238, .35), transparent 35%),
-        linear-gradient(135deg,
-            #171329, #30204e, #29264f, #171329) !important;
-    background-attachment: fixed !important;
-    overflow-x: hidden;
-}
-
-/* NEBULA CLOUDS */
-
-body::after {
-    content: "";
-    position: fixed;
-    inset: -20%;
-    z-index: 0;
-    pointer-events: none;
-
-    background:
-        radial-gradient(ellipse at 20% 30%,
-            rgba(255, 65, 190, .38), transparent 25%),
-        radial-gradient(ellipse at 75% 20%,
-            rgba(115, 160, 255, .35), transparent 28%),
-        radial-gradient(ellipse at 55% 65%,
-            rgba(203, 113, 255, .35), transparent 30%),
-        radial-gradient(ellipse at 15% 80%,
-            rgba(102, 203, 255, .30), transparent 25%),
-        radial-gradient(ellipse at 90% 85%,
-            rgba(229, 117, 215, .25), transparent 28%);
-
-    filter: blur(55px);
-    animation: nebulaMove 18s ease-in-out infinite alternate;
-}
-
-@keyframes nebulaMove {
-    0% {
-        transform: translate(-2%, -1%) scale(1);
-    }
-    50% {
-        transform: translate(2%, 2%) scale(1.08);
-    }
-    100% {
-        transform: translate(-1%, 3%) scale(1.03);
-    }
-}
-
-/* STAR FIELD */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-
-    background-image:
-        radial-gradient(2px 2px at 10% 15%, white 99%, transparent),
-        radial-gradient(2px 2px at 25% 75%, #f5caff 99%, transparent),
-        radial-gradient(3px 3px at 45% 25%, white 99%, transparent),
-        radial-gradient(2px 2px at 65% 55%, #c9e9ff 99%, transparent),
-        radial-gradient(3px 3px at 85% 15%, white 99%, transparent),
-        radial-gradient(2px 2px at 90% 80%, #f5caff 99%, transparent),
-        radial-gradient(2px 2px at 35% 90%, white 99%, transparent),
-        radial-gradient(3px 3px at 72% 88%, #d9caff 99%, transparent),
-        radial-gradient(2px 2px at 55% 8%, white 99%, transparent),
-        radial-gradient(2px 2px at 15% 48%, #c9e9ff 99%, transparent);
-
-    background-size: 280px 280px;
-    background-repeat: repeat;
-    animation: starShine 3s ease-in-out infinite alternate;
-}
-
-@keyframes starShine {
-    from { opacity: .35; }
-    to { opacity: 1; }
-}
-
-/* CONTENT ABOVE BACKGROUND EFFECTS */
-
-.navbar,
-.hero,
-.about,
-.tracker,
-.calendar-section,
-.dashboard,
-.symptom-section,
-.history-section,
-.contact {
-    position: relative;
-    z-index: 1;
-}
-
-/* NAVIGATION */
-
-.navbar {
-    background: rgba(25, 19, 47, .80) !important;
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(220, 180, 255, .20);
-}
-
-.logo {
-    color: #efa9ef;
-    text-shadow: 0 0 15px #d946a8;
-}
-
-.nav-links a {
-    color: #eadbff;
-}
-
-.nav-links a:hover {
-    color: #f58bd9;
-}
-
-.nav-links .login-btn {
-    background: linear-gradient(120deg, #e64cac, #9d8cf0);
-}
-
-/* HERO */
-
-.hero {
-    background: transparent !important;
-}
-
-.hero h2 {
-    color: #f4b4ef;
-    text-shadow: 0 0 20px rgba(235, 91, 202, .75);
-}
-
-.hero p {
-    color: #e5d9ff;
-}
-
-/* GRADIENT BUTTONS */
-
-.start-btn,
-.dashboard-btn,
-#cycleForm button,
-#symptomForm button {
-    background: linear-gradient(
-        110deg,
-        #e64cac,
-        #bb83dc,
-        #898fe8,
-        #83cbed
-    ) !important;
-    color: white;
-    border: none;
-    box-shadow: 0 0 20px rgba(194, 111, 231, .30);
-}
-
-.start-btn:hover,
-.dashboard-btn:hover {
-    box-shadow: 0 0 30px rgba(219, 143, 255, .65);
-}
-
-/* TRANSPARENT SECTIONS */
-
-.about,
-.tracker,
-.calendar-section,
-.dashboard,
-.symptom-section,
-.history-section {
-    background: rgba(31, 24, 57, .30) !important;
-    backdrop-filter: blur(4px);
-}
-
-.about h2,
-.tracker h2,
-.calendar-section h2,
-.dashboard-heading h2,
-.symptom-section h2,
-.history-section h2 {
-    color: #e7b0f3;
-    text-shadow: 0 0 15px rgba(219, 126, 255, .40);
-}
-
-.about p,
-.tracker p,
-.calendar-section > p,
-.dashboard-heading p,
-.symptom-section > p,
-.history-section > p {
-    color: #e5dcfa;
-}
-
-/* GLASSMORPHISM CARDS */
-
-.tracker-card,
-.calendar-card,
-.dashboard-card,
-.overview-card,
-.symptom-card,
-.history-card,
-.no-history {
-    background: rgba(239, 231, 255, .92) !important;
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, .40);
-    box-shadow: 0 12px 35px rgba(9, 5, 30, .28);
-    border-radius: 22px;
-    color: #51416c;
-}
-
-/* CARD TEXT */
-
-.tracker-card h2,
-.calendar-header h3,
-.dashboard-card h3,
-.overview-card h3,
-.symptom-card h3,
-.history-card h3 {
-    color: #8755a5;
-}
-
-.dashboard-card p,
-.overview-card p,
-.history-card p {
-    color: #66547c;
-}
-
-/* INPUTS */
-
-#cycleForm input,
-#symptomForm input[type="date"],
-#symptomForm select,
-#symptomForm textarea {
-    background: #f8f3ff;
-    border: 1px solid #cfb2e8;
-    color: #51416c;
-    border-radius: 10px;
-}
-
-#cycleForm input:focus,
-#symptomForm input:focus,
-#symptomForm select:focus,
-#symptomForm textarea:focus {
-    border-color: #c46bdc;
-    box-shadow: 0 0 10px rgba(196, 107, 220, .35);
-}
-
-#cycleForm label,
-#symptomForm > label {
-    color: #75528d;
-}
-
-/* SYMPTOM OPTIONS */
-
-.symptom-options label {
-    background: #eee5fb;
-    color: #65517c;
-}
-
-.symptom-options input {
-    accent-color: #c24cbb;
-}
-
-/* CALENDAR */
-
-.calendar-header h3 {
-    color: #80509f;
-}
-
-.calendar-header button {
-    background: linear-gradient(135deg, #dba6ef, #aaa8f5);
-    color: white;
-}
-
-.calendar-weekdays div {
-    color: #9365ac;
-}
-
-.calendar-days div {
-    background: #e9e6fb;
-    color: #574b79;
-}
-
-.calendar-days .period-day {
-    background: linear-gradient(135deg, #e64cac, #c17bda);
-    color: white;
-}
-
-.calendar-days .predicted-day {
-    background: linear-gradient(135deg, #9297ef, #83cbed);
-    color: white;
-}
-
-.calendar-legend {
-    color: #66577f;
-}
-
-.period-dot {
-    background: #e64cac;
-}
-
-.predicted-dot {
-    background: #9297ef;
-}
-
-/* HISTORY */
-
-.history-card {
-    border-left: 5px solid #c16ad5;
-}
-
-.history-card button {
-    background: #eadcf8;
-    color: #80519e;
-}
-
-.history-card button:hover {
-    background: #d9c2f0;
-}
-
-/* CONTACT */
-
-.contact {
-    background: rgba(25, 19, 47, .65) !important;
-}
-
-.contact h2 {
-    color: #e9b0f0;
-}
-
-.contact p {
-    color: #e6dcf5;
-}
-
-.contact p:last-child {
-    background: rgba(238, 226, 255, .95);
-    color: #76518e;
-}
-
-/* RESULT MESSAGES */
-
-#result,
-#symptomResult {
-    color: #a45cbd;
-}
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-    .navbar {
-        background: rgba(25, 19, 47, .95) !important;
-    }
-
-    .hero {
-        padding: 75px 20px;
-    }
-}
+/* =========================================
+   END OF LUNAFLOW STYLESHEET
+========================================= */
